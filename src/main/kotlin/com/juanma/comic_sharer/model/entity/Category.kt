@@ -9,17 +9,17 @@ import jakarta.persistence.ManyToMany
 import jakarta.validation.constraints.NotBlank
 
 @Entity
-class Category {
+class Category (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int = 0
+    val id: Int = 0,
 
     @NotBlank
-    val category: String = ""
+    val category: String = "",
 
     @ManyToMany(mappedBy = "categories")
     @JsonBackReference
     val comics : Set<Comic> = setOf()
 
-}
+)
