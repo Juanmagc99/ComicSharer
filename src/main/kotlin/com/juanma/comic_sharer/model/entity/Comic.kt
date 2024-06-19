@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 
-@Entity
+@Entity(name = "comics")
 class Comic (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,5 +36,9 @@ class Comic (
         inverseJoinColumns = [JoinColumn(name = "category_id")]
     )
     @JsonManagedReference
-    val categories: Set<Category> = setOf()
+    val categories: Set<Category> = setOf(),
+
+    @OneToMany(mappedBy = "comic")
+    @JsonManagedReference
+    val chapters: Set<Chapter> = setOf()
 )

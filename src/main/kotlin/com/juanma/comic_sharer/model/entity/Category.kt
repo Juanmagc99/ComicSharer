@@ -8,7 +8,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.ManyToMany
 import jakarta.validation.constraints.NotBlank
 
-@Entity
+@Entity(name = "categories")
 class Category (
 
     @Id
