@@ -7,6 +7,6 @@ data class ComicDTO(
     val title: String,
     val author: String,
     val releaseYear: Int,
-    val genres: Set<Genre>,
-    val categories: Set<Category>
+    val genres: Set<Long>,
+    val categories: Set<Long>
 )

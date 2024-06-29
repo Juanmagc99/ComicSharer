@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface GenreRepository:JpaRepository<Genre, Long> {
+    override fun findAllById(ids: MutableIterable<Long>): MutableList<Genre>
 }

@@ -1,4 +1,4 @@
-package com.juanma.Genre_sharer.service
+package com.juanma.comic_sharer.service
 
 import com.juanma.comic_sharer.model.dto.GenreDTO
 import com.juanma.comic_sharer.model.entity.Genre
@@ -6,7 +6,7 @@ import com.juanma.comic_sharer.repository.GenreRepository
 import org.springframework.stereotype.Service
 
 @Service
-class GenreService(val  db: GenreRepository) {
+class GenreService (private val db: GenreRepository) {
 
     fun findAll(): List<Genre> {
         return db.findAll()
@@ -36,5 +36,9 @@ class GenreService(val  db: GenreRepository) {
 
     fun existById(id: Long): Boolean {
         return db.existsById(id)
+    }
+
+    fun findAllById(ids: Set<Long>): Set<Genre> {
+        return db.findAllById(ids.toMutableSet()).toSet()
     }
 }

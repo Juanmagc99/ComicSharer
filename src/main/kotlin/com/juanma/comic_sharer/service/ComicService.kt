@@ -3,10 +3,15 @@ package com.juanma.comic_sharer.service
 import com.juanma.comic_sharer.model.dto.ComicDTO
 import com.juanma.comic_sharer.model.entity.Comic
 import com.juanma.comic_sharer.repository.ComicRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class ComicService(val db: ComicRepository) {
+class ComicService @Autowired constructor(
+    val db: ComicRepository,
+    val genreService: GenreService,
+    val categoryService: CategoryService
+) {
 
     fun findAll(): List<Comic> {
         return db.findAll()
@@ -17,23 +22,27 @@ class ComicService(val db: ComicRepository) {
     }
 
     fun create(comicDTO: ComicDTO): Comic {
+        val genres = genreService.findAllById(comicDTO.genres)
+        val categories = categoryService.findAllById(comicDTO.genres)
         val comic = Comic(
             title = comicDTO.title,
             author = comicDTO.author,
             releaseYear = comicDTO.releaseYear,
-            genres = comicDTO.genres,
-            categories = comicDTO.categories
+            genres = genres,
+            categories = categories
         )
         return db.save(comic)
     }
 
     fun update(comicDTO: ComicDTO): Comic {
+        val genres = genreService.findAllById(comicDTO.genres)
+        val categories = categoryService.findAllById(comicDTO.genres)
         val comic = Comic(
             title = comicDTO.title,
             author = comicDTO.author,
             releaseYear = comicDTO.releaseYear,
-            genres = comicDTO.genres,
-            categories = comicDTO.categories
+            genres = genres,
+            categories = categories
         )
         return db.save(comic)
     }

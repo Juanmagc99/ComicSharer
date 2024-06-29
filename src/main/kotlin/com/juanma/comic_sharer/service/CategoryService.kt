@@ -2,9 +2,12 @@ package com.juanma.comic_sharer.service
 
 import com.juanma.comic_sharer.model.dto.CategoryDTO
 import com.juanma.comic_sharer.model.entity.Category
+import com.juanma.comic_sharer.model.entity.Genre
 import com.juanma.comic_sharer.repository.CategoryRepository
+import org.springframework.stereotype.Service
 
-class CategoryService(val db: CategoryRepository) {
+@Service
+class CategoryService(private val db: CategoryRepository) {
     fun findAll(): List<Category> {
         return db.findAll()
     }
@@ -33,5 +36,9 @@ class CategoryService(val db: CategoryRepository) {
 
     fun existById(id: Long): Boolean {
         return db.existsById(id)
+    }
+
+    fun findAllById(ids: Set<Long>): Set<Category> {
+        return db.findAllById(ids.toMutableSet()).toSet()
     }
 }
