@@ -12,13 +12,13 @@ class Comic (
     val id: Long = 0,
 
     @NotBlank
-    val title: String = "",
+    var title: String = "",
 
     @NotBlank
-    val author: String = "",
+    var author: String = "",
 
     @NotBlank
-    val releaseYear: Int = 0,
+    var releaseYear: Int = 0,
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -27,7 +27,7 @@ class Comic (
         inverseJoinColumns = [JoinColumn(name = "genre_id")]
     )
     @JsonManagedReference
-    val genres: Set<Genre> = setOf(),
+    var genres: Set<Genre> = setOf(),
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -36,9 +36,9 @@ class Comic (
         inverseJoinColumns = [JoinColumn(name = "category_id")]
     )
     @JsonManagedReference
-    val categories: Set<Category> = setOf(),
+    var categories: Set<Category> = setOf(),
 
     @OneToMany(mappedBy = "comic")
     @JsonManagedReference
-    val chapters: Set<Chapter> = setOf()
+    var chapters: Set<Chapter> = setOf()
 )

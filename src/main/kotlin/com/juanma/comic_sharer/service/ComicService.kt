@@ -34,16 +34,15 @@ class ComicService @Autowired constructor(
         return db.save(comic)
     }
 
-    fun update(comicDTO: ComicDTO): Comic {
+    fun update(comicDTO: ComicDTO, id: Long): Comic {
         val genres = genreService.findAllById(comicDTO.genres)
         val categories = categoryService.findAllById(comicDTO.genres)
-        val comic = Comic(
-            title = comicDTO.title,
-            author = comicDTO.author,
-            releaseYear = comicDTO.releaseYear,
-            genres = genres,
-            categories = categories
-        )
+        val comic = findById(id)
+        comic.title = comicDTO.title
+        comic.author = comicDTO.author
+        comic.releaseYear = comicDTO.releaseYear
+        comic.genres = genres
+        comic.categories = categories
         return db.save(comic)
     }
 
@@ -53,5 +52,13 @@ class ComicService @Autowired constructor(
 
     fun existById(id: Long): Boolean {
         return db.existsById(id)
+    }
+
+    fun findByTitle(title: String): Comic {
+        return db.findByTitle(title)
+    }
+
+    fun existsByTitle(title: String): Boolean {
+        return db.existsByTitle(title)
     }
 }

@@ -19,6 +19,21 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/comics")
 class ComicController(private val comicService: ComicService) {
 
+    @GetMapping("/{id}")
+    fun getComic(
+        @PathVariable id: Long
+    ): ResponseEntity<Any> {
+        try {
+            if (comicService.existById(id)){
+                return ResponseEntity.ok(comicService.findById(id))
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This comic doesnt exists")
+            }
+        } catch (ext: DataAccessException) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong")
+        }
+    }
+
     @GetMapping
     fun getAllComics(): ResponseEntity<Any> {
         val comics = comicService.findAll()
@@ -51,7 +66,7 @@ class ComicController(private val comicService: ComicService) {
         val comicUpdate: Comic?
         try {
             if (comicService.existById(id)) {
-                comicUpdate = comicService.update(comicDTO)
+                comicUpdate = comicService.update(comicDTO, id)
                 return ResponseEntity.status(HttpStatus.OK).body(comicDTO)
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This comic doesnt exists")

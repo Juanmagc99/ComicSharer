@@ -41,4 +41,5 @@ class CategoryService(private val db: CategoryRepository) {
     fun findAllById(ids: Set<Long>): Set<Category> {
         return db.findAllById(ids.toMutableSet()).toSet()
     }
+
 }
